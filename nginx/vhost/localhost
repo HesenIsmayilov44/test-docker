@@ -1,0 +1,6 @@
+location /static/ {
+    alias /RestApi/static/;
+}
+location /media/ {
+    alias /RestApi/media/;
+}
