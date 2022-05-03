@@ -4,7 +4,7 @@ ENV DEBUG False
 WORKDIR /code
 COPY requirements.txt /code/requirements.txt
 RUN pip install -r requirements.txt
+COPY ./entrypoint.sh /
 ADD . .
 
-COPY ./entrypoint.sh /code/
 ENTRYPOINT ["sh", "/entrypoint.sh"]
