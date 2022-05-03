@@ -3,5 +3,5 @@
 python manage.py migrate --no-input
 python manage.py collectstatic --no-input
 
-gunicorn RestApi.wsgi:application --bind 0.0.0.0:8000
+gunicorn ResApi.wsgi:application --bind 0.0.0.0:8000
 
