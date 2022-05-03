@@ -1,17 +1,18 @@
 version: '3'
 
 services:
-  nginx-proxy:
-    image: jwilder/nginx-proxy
-    restart: "always"
-    ports:
-        - "80:80"
-    volumes:
-        - /var/run/docker.sock:/tmp/docker.sock:ro
-        - ./nginx/vhost/:/etc/nginx/vhost.d:ro
-        - ./nginx/conf.d/client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf:ro
-        - ./static/:/RestApi/static 
-        # - ./nginx/proxy.conf/:/etc/nginx/proxy.conf
+  # nginx-proxy:
+  #   image: jwilder/nginx-proxy
+  #   restart: "always"
+  #   ports:
+  #       - "80:80"
+  #   volumes:
+  #       - /var/run/docker.sock:/tmp/docker.sock:ro
+  #       - ./nginx/vhost/:/etc/nginx/vhost.d:ro
+  #       - ./nginx/conf.d/client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf:ro
+  #       - static:/static 
+  #       # - ./nginx/proxy.conf/:/etc/nginx/proxy.conf
+  
   postgres:
     container_name: postgres_data
     image: postgres:9.6
@@ -34,11 +35,14 @@ services:
     env_file: ./.env
     depends_on:
       - "postgres"
+  nginx:
+    build: ./nginx
+    volumes:
+      - static:/static
+    ports:
+      - "80:80"
+    depends_on:
+      - web
 
-networks:
-  default:
-    external:
-      name: nginx-proxy
-
-# volumes:
-#   static_data:
+volumes:
+  static:
